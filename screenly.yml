@@ -30,6 +30,21 @@ settings:
         help_text: Timer duration in seconds (e.g., 60 for 1 minute, 300 for 5 minutes, 3600 for 1 hour).
         type: number
       schema_version: 1
+  mode:
+    type: string
+    default_value: ring
+    title: Mode
+    optional: true
+    help_text:
+      properties:
+        help_text: Choose the layout for where the screen is placed.
+        options:
+          - label: Ring (date and progress ring)
+            value: ring
+          - label: Digits only (maximum readability at a distance)
+            value: digits
+        type: select
+      schema_version: 1
   override_locale:
     type: string
     default_value: en
