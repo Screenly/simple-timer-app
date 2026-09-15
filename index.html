@@ -6,22 +6,47 @@
     <title>Simple Timer - Screenly Edge App</title>
     <script src="screenly.js?version=1"></script>
   </head>
-  <body>
+  <body
+    class="text-white text-shadow bg-[url('/static/images/bg.webp')] bg-no-repeat bg-center bg-cover before:content-[''] before:fixed before:inset-0 before:z-[var(--z-index-backdrop)] before:pointer-events-none before:bg-black/20 before:backdrop-blur-[7px]"
+  >
     <auto-scaler
       reference-width="1920"
       reference-height="1080"
       orientation="auto"
+      class="relative z-[var(--z-index-content)]"
     >
-      <div id="app">
+      <div id="app" class="w-full h-full portrait:flex portrait:flex-col">
         <app-header class="header"></app-header>
-        <main class="content">
-          <section class="timer-section">
-            <div class="date-text" data-date>--</div>
-            <div class="timer-card">
-              <div class="progress-ring-container" data-progress-ring></div>
-              <div class="timer-display">
-                <div class="timer-digits" data-timer-digits>00:00:00</div>
-                <div class="timer-total" data-timer-total>--</div>
+        <main
+          class="flex justify-center items-center h-[calc(100%-5rem)] portrait:flex-1 portrait:h-auto"
+        >
+          <section class="flex flex-col items-center gap-8">
+            <div
+              class="text-[2.8125rem] font-normal tracking-[-0.1125rem] portrait:text-[2.4rem]"
+              data-date
+            >
+              --
+            </div>
+            <div
+              class="relative flex justify-center items-center w-[41.25rem] h-[41.25rem] rounded-3xl border-[0.047rem] border-white/10 bg-[linear-gradient(90deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4)),linear-gradient(90deg,rgba(68,68,68,0.4),rgba(68,68,68,0.4)),linear-gradient(135deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)] shadow-[0_0.84rem_2.52rem_0_rgba(0,0,0,0.15),0_0.047rem_0_0_rgba(255,255,255,0.15)_inset,0_-0.047rem_0_0_rgba(255,255,255,0.05)_inset] portrait:w-[36rem] portrait:h-[36rem]"
+            >
+              <div
+                class="absolute inset-0 flex justify-center items-center [&>svg]:w-[73%] [&>svg]:h-[73%]"
+                data-progress-ring
+              ></div>
+              <div class="relative flex flex-col items-center gap-2 z-[1]">
+                <div
+                  class="font-[Inria_Sans,sans-serif] font-bold text-[5.8rem] leading-none tracking-[0.15rem] tabular-nums portrait:text-[5rem]"
+                  data-timer-digits
+                >
+                  00:00:00
+                </div>
+                <div
+                  class="font-[Inria_Sans,sans-serif] font-normal text-[1.7rem] text-white/70"
+                  data-timer-total
+                >
+                  --
+                </div>
               </div>
             </div>
           </section>
@@ -30,7 +55,7 @@
     </auto-scaler>
     <template id="timer-digits-template">
       <span data-time-prefix></span
-      ><span class="accent" data-time-seconds></span>
+      ><span class="text-[var(--theme-color-primary)]" data-time-seconds></span>
     </template>
     <script type="module" src="/src/main.ts"></script>
   </body>
