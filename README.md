@@ -1,4 +1,8 @@
+[![Version](https://img.shields.io/github/v/release/Screenly/simple-timer-app)](https://github.com/Screenly/simple-timer-app/releases/latest)
+
 # Screenly Simple Timer App
+
+![Simple Timer App Preview](/screenshots/1920x1080.webp)
 
 ## Getting Started
 
