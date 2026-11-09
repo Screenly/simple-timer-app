@@ -14,12 +14,13 @@ updates:
       # TypeScript 7 breaks `bun run lint`. Remove once upstream supports it.
       - dependency-name: 'typescript'
         versions:
-          - '>=7'
+          - '>=6.1'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'monthly'
+      interval: 'weekly'
+    target-branch: 'development'
     groups:
       github-actions:
         patterns:
