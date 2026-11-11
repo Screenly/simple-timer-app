@@ -1,49 +1,36 @@
-/* Import Screenly Design System */
 @import '@screenly/edge-apps/styles';
 
-@font-face {
-  font-family: 'Inria Sans';
-  src: url('/static/fonts/InriaSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inria Sans';
-  src: url('/static/fonts/InriaSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  --theme-color-primary: #ac1fff;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  color: white;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: url('/static/images/bg.webp') no-repeat center center;
-  background-size: cover;
-  text-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.25);
+  --timer-accent: var(--theme-color-primary, #972eff);
+  --timer-canvas: #08080d;
+  --timer-ink: #fff;
+  --timer-ink-dim: rgb(255 255 255 / 55%);
+  --timer-tick: rgb(255 255 255 / 22%);
+  --timer-accent-ink: color-mix(
+    in srgb,
+    var(--timer-accent) 65%,
+    var(--timer-ink)
+  );
+  --timer-gap: 3rem;
+  --timer-date-size: 2.5rem;
+  --timer-ring-size: 56rem;
+  --timer-digits-size: 9rem;
+  --timer-total-size: 2rem;
+
+  color: var(--timer-ink);
+  background-color: var(--timer-canvas);
+  background-image: radial-gradient(
+    ellipse 75% 50% at 50% 0%,
+    color-mix(in srgb, var(--timer-accent) 45%, transparent),
+    transparent
+  );
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-index-backdrop);
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(7px);
+body.is-light-brand {
+  --timer-canvas: #f6f6f8;
+  --timer-ink: #0a0a0f;
+  --timer-ink-dim: rgb(10 10 15 / 58%);
+  --timer-tick: rgb(10 10 15 / 16%);
 }
 
 auto-scaler {
@@ -51,122 +38,103 @@ auto-scaler {
   z-index: var(--z-index-content);
 }
 
-#app {
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--timer-gap);
   width: 100%;
   height: 100%;
 }
 
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 5rem);
+.timer-date {
+  margin: 0;
+  font-size: var(--timer-date-size);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--timer-ink-dim);
 }
 
-.timer-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.date-text {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 2.8125rem;
-  font-weight: 400;
-  color: white;
-  letter-spacing: -0.1125rem;
-  text-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.25);
-}
-
-.timer-card {
+.timer-ring {
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 41.25rem;
-  height: 41.25rem;
-  border-radius: 1.5rem;
-  border: 0.047rem solid rgba(255, 255, 255, 0.1);
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    linear-gradient(90deg, rgba(68, 68, 68, 0.4), rgba(68, 68, 68, 0.4)),
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
-  box-shadow:
-    0 0.84rem 2.52rem 0 rgba(0, 0, 0, 0.15),
-    0 0.047rem 0 0 rgba(255, 255, 255, 0.15) inset,
-    0 -0.047rem 0 0 rgba(255, 255, 255, 0.05) inset;
+  justify-content: center;
+  width: var(--timer-ring-size);
+  height: var(--timer-ring-size);
 }
 
-.progress-ring-container {
+.timer-ring svg {
   position: absolute;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.progress-ring-container svg {
-  width: 73%;
-  height: 73%;
+.timer-ring line {
+  stroke: var(--timer-tick);
+  stroke-width: 6;
+}
+
+.timer-ring line.is-elapsed {
+  stroke: var(--timer-accent-ink);
 }
 
 .timer-display {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  z-index: 1;
+  gap: 1.5rem;
 }
 
 .timer-digits {
-  font-family: 'Inria Sans', sans-serif;
-  font-weight: 700;
-  font-size: 5.8rem;
+  margin: 0;
+  font-size: var(--timer-digits-size);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.15rem;
-  color: white;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 
-.timer-digits .accent {
-  color: var(--theme-color-primary);
+.timer-seconds {
+  color: var(--timer-accent-ink);
 }
 
 .timer-total {
-  font-family: 'Inria Sans', sans-serif;
-  font-weight: 400;
-  font-size: 1.7rem;
-  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: var(--timer-total-size);
+  color: var(--timer-ink-dim);
+}
+
+body.mode-digits {
+  --timer-digits-size: 24rem;
+  --timer-total-size: 3.25rem;
+}
+
+body.mode-digits .timer-date {
+  display: none;
+}
+
+body.mode-digits .timer-ring {
+  width: auto;
+  height: auto;
+}
+
+body.mode-digits .timer-display {
+  gap: 3rem;
 }
 
 @media (orientation: portrait) {
-  #app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  body {
+    --timer-gap: 4.5rem;
+    --timer-date-size: 3rem;
+    --timer-ring-size: 58rem;
   }
 
-  .content {
-    flex: 1;
-    height: auto;
-  }
-
-  .timer-card {
-    width: 36rem;
-    height: 36rem;
-  }
-
-  .timer-digits {
-    font-size: 5rem;
-  }
-
-  .date-text {
-    font-size: 2.4rem;
+  body.mode-digits {
+    --timer-digits-size: 14rem;
+    --timer-total-size: 3rem;
   }
 }

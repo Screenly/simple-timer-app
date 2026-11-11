@@ -1,20 +1,8 @@
-const REMAINING_COLOR = 'rgba(255, 255, 255, 0.8)'
-
-function getElapsedColor(): string {
-  return (
-    getComputedStyle(document.documentElement)
-      .getPropertyValue('--theme-color-primary')
-      .trim() || '#ac1fff'
-  )
-}
 const SVG_NS = 'http://www.w3.org/2000/svg'
 const TICK_COUNT = 60
 
 export function createProgressRingSVG(diameter: number): SVGSVGElement {
-  const tickCount = TICK_COUNT
   const svg = document.createElementNS(SVG_NS, 'svg')
-  svg.setAttribute('width', `${diameter}`)
-  svg.setAttribute('height', `${diameter}`)
   svg.setAttribute('viewBox', `0 0 ${diameter} ${diameter}`)
 
   const cx = diameter / 2
@@ -23,8 +11,8 @@ export function createProgressRingSVG(diameter: number): SVGSVGElement {
   const tickLength = diameter * 0.04
   const innerRadius = outerRadius - tickLength
 
-  for (let i = 0; i < tickCount; i++) {
-    const angle = (i / tickCount) * 2 * Math.PI - Math.PI / 2
+  for (let i = 0; i < TICK_COUNT; i++) {
+    const angle = (i / TICK_COUNT) * 2 * Math.PI - Math.PI / 2
     const x1 = cx + innerRadius * Math.cos(angle)
     const y1 = cy + innerRadius * Math.sin(angle)
     const x2 = cx + outerRadius * Math.cos(angle)
@@ -35,9 +23,6 @@ export function createProgressRingSVG(diameter: number): SVGSVGElement {
     line.setAttribute('y1', `${y1}`)
     line.setAttribute('x2', `${x2}`)
     line.setAttribute('y2', `${y2}`)
-    line.setAttribute('stroke', REMAINING_COLOR)
-    line.setAttribute('stroke-width', '6')
-    line.setAttribute('stroke-linecap', 'butt')
     line.setAttribute('data-tick', `${i}`)
     svg.appendChild(line)
   }
@@ -47,13 +32,9 @@ export function createProgressRingSVG(diameter: number): SVGSVGElement {
 
 export function updateProgressRing(svg: SVGSVGElement, progress: number): void {
   const ticks = svg.querySelectorAll('line[data-tick]')
-  const tickCount = ticks.length
-  const elapsedTicks = Math.floor(progress * tickCount)
+  const elapsedTicks = Math.floor(progress * ticks.length)
 
   ticks.forEach((tick, i) => {
-    tick.setAttribute(
-      'stroke',
-      i < elapsedTicks ? getElapsedColor() : REMAINING_COLOR,
-    )
+    tick.classList.toggle('is-elapsed', i < elapsedTicks)
   })
 }
