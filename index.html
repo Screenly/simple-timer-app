@@ -12,26 +12,19 @@
       reference-height="1080"
       orientation="auto"
     >
-      <div id="app">
-        <app-header class="header"></app-header>
-        <main class="content">
-          <section class="timer-section">
-            <div class="date-text" data-date>--</div>
-            <div class="timer-card">
-              <div class="progress-ring-container" data-progress-ring></div>
-              <div class="timer-display">
-                <div class="timer-digits" data-timer-digits>00:00:00</div>
-                <div class="timer-total" data-timer-total>--</div>
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
+      <main class="timer">
+        <p class="timer-date" data-date></p>
+        <div class="timer-ring" data-progress-ring>
+          <div class="timer-display">
+            <p class="timer-digits" data-timer-digits>
+              <span data-time-prefix></span
+              ><span class="timer-seconds" data-time-seconds></span>
+            </p>
+            <p class="timer-total" data-timer-total></p>
+          </div>
+        </div>
+      </main>
     </auto-scaler>
-    <template id="timer-digits-template">
-      <span data-time-prefix></span
-      ><span class="accent" data-time-seconds></span>
-    </template>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
